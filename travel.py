@@ -18,10 +18,11 @@ from werkzeug.utils import secure_filename
 import os
 
 UPLOAD_FOLDER = 'images'
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 5*1024*1024
 
 engine = create_engine('sqlite:///travelblog.db')
 Base.metadata.bind = engine
@@ -334,30 +335,30 @@ def EditDelImage(category_id, place_id, blog_id):
                             'new_img' in request.form):
                             if 'file' in request.files:
                                 file = request.files['file']
-                            if file.filename == '':
-                                flash('No image file selected')
-                                return redirect(url_for('EditBlog',
-                                                        place_id=place_id,
-                                                        blog_id=blog_id,
-                                                        category_id=category_id
-                                                        ))
-                            if file and allowed_file(file.filename):
-                                if 'edit_img' in request.form:
-                                    os.remove(os.path.join(
-                                        app.config['UPLOAD_FOLDER'],
-                                        blog.image))
-                                filename = secure_filename(file.filename)
-                                path = os.path.join(app.config[
-                                    'UPLOAD_FOLDER'],filename)
-                                file.save(path)
-                                blog.image = filename
-                                session.commit()
-                                flash("Image has been edited")
-                                return redirect(url_for('EditBlog',
-                                                        category_id=
-                                                        category_id,
-                                                        place_id=place_id,
-                                                        blog_id=blog_id))
+                                if file.filename == '':
+                                    flash('No image file selected')
+                                    return redirect(url_for('EditBlog',
+                                                            place_id=place_id,
+                                                            blog_id=blog_id,
+                                                            category_id=category_id
+                                                            ))
+                                if file and allowed_file(file.filename):
+                                    if 'edit_img' in request.form:
+                                        os.remove(os.path.join(
+                                            app.config['UPLOAD_FOLDER'],
+                                            blog.image))
+                                    filename = secure_filename(file.filename)
+                                    path = os.path.join(app.config[
+                                        'UPLOAD_FOLDER'],filename)
+                                    file.save(path)
+                                    blog.image = filename
+                                    session.commit()
+                                    flash("Image has been edited")
+                                    return redirect(url_for('EditBlog',
+                                                            category_id=
+                                                            category_id,
+                                                            place_id=place_id,
+                                                            blog_id=blog_id))
                         if 'del_img' in request.form:
                             os.remove(os.path.join(app.config['UPLOAD_FOLDER'],
                                                    blog.image))
