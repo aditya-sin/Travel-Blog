@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class = 'flash'>
+		      {% with messages = get_flashed_messages() %}
+      	{% if messages %}
+          
+        
+        {% for message in messages %}
+            <strong> {{ message }} </strong> 
+        {% endfor %}
+        
+        {% endif %}
+    	{% endwith %}
+</div>
+
+<div class="newblog">
+	<form method="post">
+		<div class="blog-sub">Subject</div>
+		<div class="position">
+			<input class="subject" type="text" name="subject" value="{{ b.subject }}">
+		</div>
+		{% if b.image != '' %}
+		<div class="show_img">Image</div>
+		<div class="blog-img">
+			<img src="{{url_for('uploaded_file',filename=b.image)}}"> 
+		</div>
+
+		<div class="edit-img" >
+			<a href="{{ url_for('EditDelImage', category_id=b.place.category_id, place_id=b.place.id, blog_id=b.id ) }}">Change image</a> 
+		</div>
+		{% else %}
+		<a href="{{url_for('EditDelImage', category_id=b.place.category_id, place_id=b.place.id, blog_id=b.id )}}">
+			<div class="show_img">Upload an image</div>	
+		</a>
+		
+
+		{% endif %}
+		<div class="blog-con">Content</div>
+		<div class="position">
+			<textarea class="content" name="content">{{ b.content.replace('<br>', '\n')}}</textarea>
+		</div>
+		<input type="hidden" name="token" value="{{token}}">
+
+		<div class="create">
+			<input type="submit" value="Edit">
+		</div>
+		
+	</form>	
+
+	<div class="cancel">
+		<a href="{{ url_for('Blogs', category_id=b.place.category_id, place_id=b.place.id, blog_id=b.id)}}">Cancel</a>
+	</div>
+</div>
+
+{% endblock %}

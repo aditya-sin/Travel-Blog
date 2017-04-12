@@ -1,0 +1,368 @@
+body {
+	width: 800px;
+	margin: 0 auto;
+	font-family: 'Roboto', sans-serif;
+}
+
+.header-title {
+	text-align: center;
+	background-color: #ffaa00;
+	height: 50px;
+	color: white;
+}
+
+.header-title h1 {
+	padding-top: 10px;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+}
+
+.header-bar {
+	margin-top: 10px;
+	margin-left: 250px;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.user-pic {
+	width: 280px;
+}
+
+.user-pic img {
+	float: right;
+	width: 20px;
+	height: 20px;
+	border-radius: 10px;
+}
+
+.home {
+	margin-left: 50px;
+	margin-right: 10px;
+}
+
+.drpbtn-cat {
+	cursor: pointer;
+	outline: 0;
+}
+
+.drpbtn-cat:hover, .drpbtn-cat:focus {
+	background-color: #cccccc;
+}
+
+.drpbtn-places {
+	cursor: pointer;
+	outline: 0;
+}
+
+.drpbtn-places:hover, .drpbtn-places:focus {
+	background-color: #cccccc;
+}
+
+.dropdown-category {
+	margin-right: 10px;
+	text-align: center;
+    position: relative;
+    display: inline-block;
+}
+
+.cat-List {
+	display: none;
+	position: absolute;
+	z-index: 1;
+	background-color: #99ffcc;
+	text-align: center;
+	width: 100px;
+	border: 1px solid;
+	border-color: black;
+}
+
+.cat-List a {
+	display: block;
+	font-size: 14px;
+	margin-top: 5px;
+	text-decoration: underline;
+}
+
+.cat-List a:hover {
+	background-color: #00e673; 
+}
+
+.place-List {
+	display: none;
+	position: absolute;
+	z-index: 1;
+	background-color: #99ffcc;
+	text-align: center;
+	width: 100px;
+	border: 1px solid;
+	border-color: black;
+}
+
+.place-List a {
+	display: block;
+	font-size: 14px;
+	margin-top: 5px;
+}
+
+.place-List a:hover {
+	background-color: #00e673; 
+}
+
+.show {
+	display: block;
+}
+
+.dropdown-place {
+	margin-right: 10px;
+	text-align: center;
+}
+
+.categories{
+	width: 600px;
+	margin: 0 auto;
+	display: flex;
+	flex-wrap: wrap;
+	margin-top: 25px;
+}
+
+.category{
+	width: 33%;
+	height: 100px;
+	background-color: #f1f1f1;
+	border: 1px solid;
+	border-color: #b8b894;
+	position: relative;
+}
+
+.category-name {
+	position: absolute;
+	font-size: 20px;
+	width: 80%;
+	padding-left: 10px;
+	padding-right: 10px;
+	top: 32px;
+}
+
+.category:hover {
+	background-color: #a6a6a6;
+	color: white;
+}
+
+.addplace {
+	margin-top: 50px;
+	text-align: center;
+}
+
+.addplace a:hover {
+	background-color: #cccccc;
+}
+
+.addBlog {
+	margin-top: 50px;
+	text-align: center;
+}
+
+.no-blogs {
+	text-align: center;
+	margin-top: 25px;
+}
+
+.blog {
+	width: 600px;
+	margin: 0 auto;
+	margin-top: 25px;
+	margin-bottom: 50px;
+	text-align: center;
+}
+
+.blog-subject h2 {
+	margin-bottom: 0;
+	font-weight: 400;
+}
+
+.blog-details {
+	font-size: 14px;
+	margin-bottom: 15px;
+}
+
+.blog-content {
+	margin-top: 25px;
+	text-align: justify;
+}
+
+.blog-modify {
+	margin-top: 25px;
+	text-align: center;
+}
+
+.newblog {
+	width: 600px;
+	margin: 0 auto;
+	text-align: center;
+	margin-bottom: 50px;
+}
+
+.blog-img {
+	margin-top: 15px;
+}
+
+.upload{
+	margin-bottom: 10px;
+}
+
+.blog-img img {
+	max-width: 400px;
+	max-height: 300px;
+}
+
+.cancel-blog {
+	margin-top: 25px;
+}
+
+.blog-sub {
+	margin-top: 25px;
+	margin-bottom: 15px;
+}
+
+.subject {
+	width: 500px;
+	height: 1.5em;
+	margin-left: 50px;
+}
+
+.blog-con {
+	margin-top: 25px;
+	margin-bottom: 15px;
+	text-align: center;
+}
+
+.content {
+	width: 600px;
+	height: 300px;
+}
+
+.errmsg {
+	text-align: center;
+	color: red;
+}
+
+.position {
+	width: 600px;
+	margin: 0 auto;
+}
+
+.create {
+	margin-top: 15px;
+	text-align: center;
+}
+
+.login-buttons {
+	width: 200px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 25px;
+	padding-bottom: 25px;
+	text-align: center;
+	background-color: #66e0ff;
+	border: 1px solid;
+	border-color: black;
+}
+
+.googlelogin {
+	margin-top: 15px;
+	width: 100px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.fb-login {
+	margin-bottom: 15px;
+	width: 100px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.place-name {
+	margin-top: 25px;
+	margin-bottom: 15px;
+	text-align: center;
+}
+
+.name {
+	width: 200px;
+	margin: 0 auto;
+}
+
+.name-form {
+	width: 200px;
+	height: 1.5em;
+}
+
+.submit-place {
+	margin-top: 15px;
+	text-align: center;
+}
+
+.deleteBlog {
+	width: 600px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.deleteBlog h2 {
+	margin-bottom: 0;
+}
+
+.canceldelete {
+	margin-top: 25px;
+}
+
+.show_img {
+	margin-top: 25px;
+	text-align: center;
+}
+
+.hide {
+	display: none;
+}
+
+.change-img {
+	margin-top: 10px;
+}
+
+.delete-img {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.new-img {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.img-no-img {
+	margin-bottom: 15px;
+}
+
+.cancel {
+	margin-top: 15px;
+}
+
+.place_name {
+	text-align: center;
+	text-decoration: underline;
+}
+
+.flash {
+	text-align: center;
+	background-color: #99cc00;
+	color: white;
+}
+
+.cancel-place {
+	margin-top: 15px;
+	text-align: center;
+}

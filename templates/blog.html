@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class = 'flash'>
+          {% with messages = get_flashed_messages() %}
+          {% if messages %}
+          
+          
+          {% for message in messages %}
+             <strong> {{ message }} </strong> 
+          {% endfor %}
+          
+         {% endif %}
+    {% endwith %}
+</div>
+
+<div class="blog">
+	<div class="blog-subject">
+			<h2> {{ b.subject }} </h2>
+	</div>
+	<div class="blog-details">
+		By: &nbsp{{b.user.name}}
+		
+	</div>
+	{% if b.image != '' %}
+	<div class="blog-img">
+		<img src="{{url_for('uploaded_file',filename=b.image)}}"> 
+	</div>
+	{% endif %}
+	<div class="blog-content">	
+		{{ b.content | safe}}
+	</div>
+
+	{% if session['user_id'] == b.user.id %}
+	<div class="blog-modify">
+		<a href="{{url_for('EditBlog',category_id=category_id, place_id=b.place_id, blog_id=b.id)}}">Edit</a>
+		<a href="{{url_for('DeleteBlog',category_id=category_id, place_id=b.place_id, blog_id=b.id)}}">Delete</a>
+	</div>
+	{% endif %}
+
+</div>
+
+
+
+
+{% endblock %}

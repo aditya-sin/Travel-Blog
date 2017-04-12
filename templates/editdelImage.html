@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="newblog">
+	
+	<div class="blog-sub">{{ b.subject }}</div>
+	
+	{% if b.image != '' %}
+	<div class="old_img">Old Image</div>
+	
+	<div class="blog-img">
+		<img src="{{url_for('uploaded_file',filename=b.image)}}"> 
+	</div>
+
+	<div class="change-img">
+		<form method="post" enctype="multipart/form-data">
+			<input type="hidden" name="edit_img" value="1">
+			<div class="new-img">
+				<input type="file" name="file" accept="image/*">
+			</div>
+			<input type="hidden" name="token" value="{{token}}">
+			<input type="submit" value="Change image">
+		</form>
+	</div>
+	
+	<div class="delete-img">
+		<form method="post" action="{{ url_for('EditDelImage', category_id=b.place.category_id, place_id=b.place.id, blog_id=b.id)}}">
+			<input type="hidden" name="token" value="{{token}}">
+			<input type="hidden" name="del_img" value="1">
+			<input type="submit" value="Delete image">
+		
+		</form>
+	</div>
+	
+
+	{% else %}
+	<div class="img-no-img">
+		<form method="post" enctype="multipart/form-data">
+			<input type="hidden" name="new_img" value="1">
+			<input type="hidden" name="token" value="{{token}}">
+			<input type="file" name="file" accept="image/*">
+			<input type="submit" value="Add Image">
+		</form>
+	</div>
+	
+	{% endif %}
+	
+	<a href="{{ url_for('EditBlog', category_id=b.place.category_id, place_id=b.place.id, blog_id=b.id ) }}">Cancel</a>
+
+</div>
+
+
+
+
+
+{% endblock %}

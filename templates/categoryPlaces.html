@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class = 'flash'>
+          {% with messages = get_flashed_messages() %}
+          {% if messages %}
+          
+          
+          {% for message in messages %}
+            <strong> {{ message }} </strong>
+          {% endfor %}
+          
+         {% endif %}
+    {% endwith %}
+</div>
+
+<div class="categories">
+	{% for p in cplaces %}
+	<a class="category" href="{{url_for('Places', category_id = category_id, place_id = p.id)}}">
+		<div class="category-name" >{{p.name}}</div>
+	</a>
+	{% endfor %}
+</div>
+
+{% if session['user_id'] %}
+<div class="addplace">
+	<div> Can't find the place you are looking for?</div>
+	<br>
+	<a href="{{ url_for('AddPlace', category_id=category_id) }}">Add a place</a> 
+</div>
+
+{% endif %}
+
+
+{% endblock %}

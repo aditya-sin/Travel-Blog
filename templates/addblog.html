@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class = 'flash'>
+          {% with messages = get_flashed_messages() %}
+          {% if messages %}
+          
+          
+          {% for message in messages %}
+            <strong> {{ message }} </strong>
+          {% endfor %}
+          
+         {% endif %}
+    	{% endwith %}
+</div>
+
+
+<div class="newblog">
+	<form method="post" enctype="multipart/form-data">
+		<div class="blog-sub"><h2>Subject</h2></div>
+		<div class="position">
+			<input class="subject" type="text" name="subject" placeholder="Subject">
+		</div>
+		
+		<div class="blog-img">
+		<div class="upload"><h2>Upload an image</h2></div>
+			<input type="file" name="file" accept="image/*">
+		</div>
+
+		<div class="blog-con"><h2>Content</h2></div>
+		<div class="position">
+			<textarea class="content" name="content"></textarea>
+		</div>
+		<input type="hidden" name="token" value="{{token}}">
+
+		<div class="create">
+			<input type="submit" value="Create">
+		</div>
+		
+	</form>	
+
+	<div class="cancel-blog">
+		<a href="{{url_for('Places', category_id=category_id, place_id=place_id)}}">Cancel</a>
+	</div>
+</div>
+
+{% endblock %}

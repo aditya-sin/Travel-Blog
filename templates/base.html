@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>
+		<link rel=stylesheet type=text/css href="{{ url_for('static', filename='main.css') }}">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	</head>
+	<body>
+		<div class="header">
+			<div class="header-title">
+				<h1>Travel Blogs</h1>
+			</div>
+			<div class="header-bar">
+				<div class="home">
+					<a href="/"><i class="fa fa-home"></i></a>
+				</div>
+				<div class="dropdown-category">
+					<span class="drpbtn-cat" id="drp-cat">Category</span>
+					<div id="drpdwnList" class="cat-List">
+						{% for c in cat %}
+						<a href="{{url_for('Categories', category_id = c.id)}}">{{ c.name }}</a>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="dropdown-category">
+					<span class="drpbtn-places" id="drp-places">Places</span>
+					<div id="drpdwnListplaces" class="place-List">
+						{% for p in places %}
+						<a href="{{url_for('Places', category_id = p.category_id, place_id=p.id)}}">{{ p.name }}</a>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="login">
+					{% if session['user_id'] %}
+					<a href="/disconnect">Logout</a>
+					{% else %}
+					<a href="/login">Login</a>
+					{% endif %}
+				</div>
+				{% if session['user_id'] %}
+				<div class="user-pic">
+					<img src="{{ session['picture']}}">
+				</div>
+				{% endif %}
+			</div>
+			<hr>
+		</div>
+			{% block content %}
+			{% endblock %}
+
+		<script type="text/javascript" src="{{ url_for('static', filename='script.js') }}"></script>
+
+	</body>
+</html>

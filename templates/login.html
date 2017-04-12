@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <!--LOAD PRE-REQUISITES FOR GOOGLE SIGN IN -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+
+<script src="//apis.google.com/js/platform.js?onload=start"> </script>
+
+<!-- END PRE-REQUISITES FOR GOOGLE SIGN IN -->
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>  
+
+  <div class="header">
+      <div class="header-title">
+        <h1>Travel Blogs</h1>
+      </div>
+      <div class="header-bar">
+        <div class="home">
+          <a href="/"><i class="fa fa-home"></i></a>
+        </div>
+        <div class="dropdown-category">
+          <span class="drpbtn-cat" id="drp-cat">Category</span>
+          <div id="drpdwnList" class="cat-List">
+            {% for c in cat %}
+            <a href="{{url_for('Categories', category_id = c.id)}}">{{ c.name }}</a>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="dropdown-category">
+          <span class="drpbtn-places" id="drp-places">Places</span>
+          <div id="drpdwnListplaces" class="place-List">
+            {% for p in places %}
+            <a href="{{url_for('Places', category_id = p.category_id, place_id=p.id)}}">{{ p.name }}</a>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="login">
+          {% if session['user_id'] %}
+          <a href="/disconnect">Logout</a>
+          {% else %}
+          <a href="/login">Login</a>
+          {% endif %}
+        </div>
+      </div>
+      <hr>
+    </div>
+     
+     <div class = 'flash'>
+          {% with messages = get_flashed_messages() %}
+          {% if messages %}
+          
+          
+          {% for message in messages %}
+            <strong> {{ message }} </strong> 
+          {% endfor %}
+          
+         {% endif %}
+    {% endwith %}
+    </div>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='script.js') }}"></script>
+<!-- GOOGLE PLUS SIGN IN BUTTON-->
+<div class="login-buttons">
+  <div class="login-with"> Login with</div>
+  
+     <div class="googlelogin" id="signInButton">
+          <span class="g-signin"
+            data-scope="openid email"
+            data-clientid="70810973320-gt1c9kkt8hs8fhe8v3gp1i5lv1b96k04.apps.googleusercontent.com"
+            data-redirecturi="postmessage"
+            data-accesstype="offline"
+            data-cookiepolicy="single_host_origin"
+            data-callback="signInCallback"
+            data-approvalprompt="force">
+          </span>
+        </div>
+
+<!--END GOOGLE PLUS SIGN IN BUTTON -->
+
+<div id="result"></div>
+
+
+
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '2008061789421336',
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v2.8'
+    });
+    FB.AppEvents.logPageView();   
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+   function sendTokenToServer() {
+    var access_token = FB.getAuthResponse()['accessToken'];
+    console.log(access_token)
+    console.log('Welcome!  Fetching your information.... ');
+    FB.api('/me', function(response) {
+      console.log('Successful login for: ' + response.name);
+     $.ajax({
+      type: 'POST',
+      url: '/fbconnect?state={{STATE}}',
+      processData: false,
+      data: access_token,
+      contentType: 'application/octet-stream; charset=utf-8',
+      success: function(result) {
+        // Handle or verify the server response if necessary.
+        if (result) {
+          $('.googlelogin').addClass('hide');
+          $('.fb-login').addClass('hide');
+          $('.login-with').addClass('hide');
+          $('#result').html('Login Successful!</br>'+ result + '</br>Redirecting...')
+         setTimeout(function() {
+          window.location.href = "/home";
+         }, 4000);
+          
+      } else {
+        $('#result').html('Failed to make a server-side call. Check your configuration and console.');
+         }
+      }
+      
+  });
+    });
+  }
+
+</script>
+
+<div class="fb-login">
+  
+         
+      <fb:login-button scope="public_profile,email" onlogin="sendTokenToServer();">
+      <a href='javascript:sendTokenToServer()'>Login with Fb</a>
+
+      </fb:login-button>
+
+  
+</div>
+
+<script>
+function signInCallback(authResult) {
+  if (authResult['code']) {
+    // Hide the sign-in button now that the user is authorized
+    $('#signInButton').attr('style', 'display: none');
+    // Send the one-time-use code to the server, if the server responds, write a 'login successful' message to the web page and then redirect back to the main restaurants page
+    $.ajax({
+      type: 'POST',
+      url: '/gconnect?state={{STATE}}',
+      processData: false,
+      data: authResult['code'],
+      contentType: 'application/octet-stream; charset=utf-8',
+      success: function(result) {
+        // Handle or verify the server response if necessary.
+        if (result) {
+          $('.googlelogin').addClass('hide');
+          $('.fb-login').addClass('hide');
+          $('.login-with').addClass('hide');
+          $('#result').html('Login Successful!</br>'+ result + '</br>Redirecting...')
+         setTimeout(function() {
+          window.location.href = "/home";
+         }, 4000);
+          
+      } 
+      else if (authResult['error']) {
+          console.log('There was an error: ' + authResult['error']);
+          } 
+      else {
+        $('#result').html('Failed to make a server-side call. Check your configuration and console.');
+         }
+      }
+      
+      }); 
+    } 
+  }
+
+
+  </script>
+
+</div>
+          
+         
+
+</body>
+
+</html>

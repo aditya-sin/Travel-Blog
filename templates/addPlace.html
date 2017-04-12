@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="flash">
+          {% with messages = get_flashed_messages() %}
+          {% if messages %}
+          
+          
+          {% for message in messages %}
+            <strong> {{ message }} </strong>
+          {% endfor %}
+          
+         {% endif %}
+    {% endwith %}
+</div>
+
+<div class="addPlace">
+	<form method="post">
+		<div class="place-name">
+			Name of the place
+		</div>
+		<div class="name">
+			<input class="name-form" type="text" name="place" placeholder="Place">
+		</div>
+		<div class="errmsg">{{ err }}</div>
+		<div class="submit-place">
+			<input type="submit" value="Create">
+		</div>
+
+	</form>
+</div>
+
+<div class="cancel-place">
+	<a href="{{url_for('Categories', category_id=category_id)}}">Cancel</a>
+</div>
+
+{% endblock %}

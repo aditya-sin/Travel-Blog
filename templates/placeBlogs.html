@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class = 'flash'>
+          {% with messages = get_flashed_messages() %}
+          {% if messages %}
+          
+          
+          {% for message in messages %}
+            <strong> {{ message }} </strong>
+          {% endfor %}
+          
+         {% endif %}
+    {% endwith %}
+</div>
+
+<div class="place_name">
+
+	<h2>Blogs on {{ place.name}}</h2>
+</div>
+
+{% if not c %}
+
+<div class="no-blogs">
+	There are no blogs to display
+</div>
+
+{% endif %}
+
+{% for b in blogs %}
+
+<div class="blog">
+	<div class="blog-subject">
+		<a href="{{url_for('Blogs',category_id=category_id, place_id=b.place_id, blog_id=b.id)}}">
+			<h2> {{ b.subject }} </h2>
+		</a> 
+	</div>
+	<div class="blog-details">
+		By:&nbsp{{b.user.name}}
+	</div>
+</div>
+
+
+
+{% endfor %}
+
+{% if session['user_id'] %}
+<div class="addBlog">
+	<a href="{{ url_for('NewBlog', category_id=category_id, place_id=place_id)}}">Post a blog</a>
+</div>
+{% endif %}
+
+{% endblock %}
