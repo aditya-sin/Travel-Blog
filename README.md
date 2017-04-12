@@ -9,6 +9,7 @@ This is a data driven web application which does the followings:
 
 ### How to use it?
 * Download the project from github. In the command propmt, after going into desired directory type 
+git clone https://github.com/aditya-sin/Travel-Blog.git
 * It can be run in virtual machine using vagrant for file sharing. To know more on how to use these, have 
 a look here: 'https://www.vagrantup.com/intro/getting-started/'
 * After going into vagrant, launch the web application in localhost using 
